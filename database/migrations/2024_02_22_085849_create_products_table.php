@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            //category
-
+            $table->foreignId('category')->constrained();
+            $table->foreignId('country')->constrained();
+            $table->foreignId('measure')->constrained();
             $table->timestamps();
         });
     }
