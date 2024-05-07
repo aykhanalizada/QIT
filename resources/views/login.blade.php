@@ -12,11 +12,15 @@
 <body>
 
 
-<div class="w-full dark:bg-slate-800 h-screen flex items-center justify-center">
+<div class="w-full bg-slate-800 h-screen flex items-center justify-center">
     <form class="bg-white shadow-md  px-16 pt-16 pb-12 mb-4 rounded-md" action="{{route('login')}}" method="POST">
         @csrf
 
+
+
         <h1 class="text-3xl text-center mb-6">Login</h1>
+
+
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                 Username
@@ -65,14 +69,21 @@
 
 <script>
 
-    function togglePasswordVisibility(){
+    function togglePasswordVisibility() {
         let passwordInput = document.getElementById('password');
-        let toggleButton = document.getElementById('.toggle-password i')
+        let toggleButton = document.querySelector('.toggle-password i')
 
-        if(passwordInput.type==='password')
-            passwordInput.type="text"
-        else
-            passwordInput.type="password"
+        if (passwordInput.type === 'password') {
+            passwordInput.type = "text";
+            toggleButton.classList.remove("far", "fa-eye")
+            toggleButton.classList.add("fa", "fa-eye-slash")
+            // console.log(toggleButton)
+        } else {
+            passwordInput.type = "password"
+            toggleButton.classList.add("far", "fa-eye")
+            toggleButton.classList.remove("fa", "fa-eye-slash")
+        }
+
     }
 
 </script>
