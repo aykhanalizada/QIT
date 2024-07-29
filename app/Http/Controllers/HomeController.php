@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Models\Category;
 use App\Models\Company;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -29,71 +32,15 @@ class HomeController extends Controller
 //        }
     }
 
-    public function users(Request $request)
+    public function setting()
     {
-        $users = User::paginate(10);
-        $companies = Company::all();
-
-        return view('users', compact('users', 'companies'));
+        $products = Product::all();
+        $categories = Category::all();
+        return view('setting',compact('products', 'categories'));
     }
 
 
-    public function updateUser(Request $request)
-    {
-        $validator = $request->validate([
-            'name' => 'required',
-            'surname' => 'required',
-            'username' => 'required',
-            'password' => 'nullable|confirmed'
-        ]);
 
-
-        $user = User::find($request->id);
-
-        $user->update([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'company_id' => $request->company,
-            'roles' => $request->rol,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-        ]);
-
-//        return back();
-    }
-
-    public function createUser(Request $request)
-    {
-        $validator = $request->validate([
-            'name' => 'required',
-            'surname' => 'required',
-            'username' => 'required',
-            'password' => 'nullable|confirmed'
-        ]);
-
-
-        $user = User::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'company_id' => $request->company,
-            'roles' => $request->rol,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-        ]);
-
-
-        return back();
-    }
-
-
-    public function deleteUser($id)
-    {
-//        dd('salam');
-        $user = User::find($id);
-        $user->delete();
-
-//        return redirect('/users');
-    }
 
 
 }

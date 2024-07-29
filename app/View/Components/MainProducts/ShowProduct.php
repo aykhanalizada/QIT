@@ -23,6 +23,6 @@ class ShowProduct extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.settings.show-product');
+        return view('components.main-products.show-product');
     }
 }

@@ -48,19 +48,10 @@ closeModals.forEach(function (closeModal) {
 
     })
 })
-
-
-
 function createProduct() {
-
-
     createProdPage.classList.remove('hidden')
     createProdContainer.classList.add('fadeInDown')
-
-
 }
-
-
 
 function showProduct($product) {
     showProdPage.classList.remove('hidden')
@@ -73,9 +64,6 @@ function showProduct($product) {
     showProdPage.querySelector('div[id="category"]').innerHTML = prodData.category.name
 
 }
-
-
-
 function editProduct($product) {
 
     editProdPage.classList.remove('hidden')
@@ -88,10 +76,6 @@ function editProduct($product) {
     editProdPage.querySelector('select[name="category"]').value = prodData.category.id
 
 }
-
-
-
-
 $(document).ready(function() {
     $('#editForm').on('submit', function(e) {
         e.preventDefault(); // Prevent the default form submission
@@ -113,6 +97,12 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 // Handle error response
+                $('#errorEdit').removeClass('hidden')
+                $('#errorMessageEdit').empty()
+                let errors = xhr.responseJSON.errors
+                $.each(errors, function (key, value) {
+                    $('#errorMessageEdit').append('<li>' + value + '</li>')
+                })
                 console.error(xhr.responseText);
             }
         });
@@ -136,18 +126,16 @@ $(document).ready(function() {
             },
             error: function(xhr, status, error) {
                 // Handle error response
-                console.error(xhr.responseText);
-            }
+                $('#errorCreate').removeClass('hidden')
+                $('#errorMessageCreate').empty()
+                let errors = xhr.responseJSON.errors
+                $.each(errors, function (key, value) {
+                    $('#errorMessageCreate').append('<li>' + value + '</li>')
+                })
+                console.error(xhr.responseText);            }
         });
     });
 });
-
-
-
-
-
-
-
 
 function deleteProduct(id,deleteUrl) {
     Swal.fire({

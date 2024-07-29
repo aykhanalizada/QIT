@@ -1,10 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SettingController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainProductController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MeasureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,19 +34,20 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 //Route::middleware(['auth','check-role:A'])->group(function(){
 Route::get('/', [HomeController::class, 'home'])->name('home');
-Route::get('/users', [HomeController::class, 'users'])->name('users');
-Route::put('/updateUser', [HomeController::class, 'updateUser'])->name('updateUser');
-Route::post('/createUser', [HomeController::class, 'createUser'])->name('createUser');
-Route::delete('/deleteUser/{id}', [HomeController::class, 'deleteUser'])->name('deleteUser');
+
+
+Route::get('/users', [UserController::class, 'users'])->name('users');
 
 
 Route::get('/products', [ProductController::class, 'products'])->name('products');
 
-Route::get('/setting', [SettingController::class, 'setting'])->name('setting');
+Route::get('/setting', [HomeController::class, 'setting'])->name('setting');
 
-Route::get('/setting/products', [SettingController::class, 'settingProduct'])->name('settingProduct');
-Route::put('/updateProduct', [SettingController::class, 'updateProduct'])->name('updateProduct');
-Route::post('/createProduct', [SettingController::class, 'createProduct'])->name('createProduct');
+Route::get('/setting/products', [MainProductController::class, 'product'])->name('settingProduct');
+Route::get('/setting/countries', [CountryController::class, 'country'])->name('country');
+Route::get('/setting/companies', [CompanyController::class, 'company'])->name('company');
+Route::get('/setting/categories', [CategoryController::class, 'index'])->name('category');
+Route::get('/setting/measures', [MeasureController::class, 'index'])->name('measure');
 
 
 //});

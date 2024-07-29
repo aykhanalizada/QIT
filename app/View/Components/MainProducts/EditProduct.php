@@ -12,11 +12,9 @@ class EditProduct extends Component
      * Create a new component instance.
      */
 
-    public $categories,$products;
-    public function __construct($products,$categories)
+    public function __construct(public  $products,public $categories)
     {
-        $this->categories = $categories;
-        $this->products = $products;
+
     }
 
     /**
@@ -24,6 +22,6 @@ class EditProduct extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.settings.edit-product');
+        return view('components.main-products.edit-product');
     }
 }

@@ -9,6 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
+    public $fillable = ['name'];
     public function dgxProducts(){
         return $this->hasMany(DGX_Product::class);
     }

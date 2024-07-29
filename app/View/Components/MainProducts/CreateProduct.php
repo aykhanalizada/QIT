@@ -24,6 +24,6 @@ class CreateProduct extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.settings.create-product');
+        return view('components.main-products.create-product');
     }
 }

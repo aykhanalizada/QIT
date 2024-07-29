@@ -27,3 +27,11 @@
 
 
 @endsection
+
+
+
+
+@section('bottomScript')
+    <script src="{{asset('js/product.js')}}"></script>
+
+@endsection

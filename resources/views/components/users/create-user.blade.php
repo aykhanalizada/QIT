@@ -27,8 +27,6 @@
             <!-- Modal body -->
             <form id="createUserForm" action="{{route('createUser') }}" method="POST">
 
-                @csrf
-
                 <input type="hidden" name="id">
 
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
@@ -92,7 +90,7 @@
                         <label for="password"
                                class=" mb-2 text-sm font-medium text-gray-900 dark:text-white mr-24">Password</label>
                         <input type="text" name="password"
-                               id="" value="{{old('password')}}"
+                               value="{{old('password')}}"
                                class="pr-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Password">
                         <i id="" class="far fa-eye text-gray-600" onclick="togglePasswordVisibility()"></i>
@@ -127,9 +125,23 @@
                 </div>
 
 
+                <div id="errorCreate" class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 hidden" role="alert">
+                    <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span class="sr-only">Danger</span>
+                    <div>
+                        <span class="font-medium">Ensure that these requirements are met:</span>
+                        <ul id="errorMessageCreate" class="mt-1.5 list-disc list-inside">
+
+                        </ul>
+                    </div>
+                </div>
+
+
+
                 <div class="flex items-center space-x-4 mt-5">
                     <button type="submit"
-                            onclick="submitUpdateForm()"
                             class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                      Create New User
                     </button>

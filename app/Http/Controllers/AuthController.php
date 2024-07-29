@@ -34,7 +34,8 @@ class AuthController extends Controller
             'company_id'=>$request->company,
             'roles'=>$request->rol
         ]);
-//        dd($request->rol);
+        
+    //    dd($request->name);
         $user->save();
 
         return redirect()->route('loginPage');

@@ -1,7 +1,7 @@
 @extends('app')
 @section('content')
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg mb-3">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <div id="tableContainer" class="relative overflow-x-auto shadow-md sm:rounded-lg mb-3">
+        <table id="userTable" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class=" text-black   uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <th scope="col" colspan="2" class="px-6 py-3">
                 İstifadəçilərin siyahısı
@@ -58,7 +58,7 @@
                               class="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline"><i
                                 class="fas fa-edit text-xl pr-2"></i></span>
 
-                        <span onclick="deleteUser({{$user->id}} )"
+                        <span onclick="deleteUser({{$user->id}},'{{route('deleteUser',['id'=>$user->id] ) }}')"
                               class="deleteUser cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             <i class="fas fa-trash text-xl"> </i>
                         </span>
@@ -72,18 +72,21 @@
 
     </div>
     {{ $users->links() }}
+
     <x-users.create-user :companies="$companies" :users="$users"/>
 
     <x-users.show-user :companies="$companies" :users="$users"/>
 
     <x-users.edit-user :companies="$companies" :users="$users"/>
 
-    <x-users.delete-user/>
+    <x-users.delete-user :users="$users"/>
 
     <x-success/>
 
-    <script src="user.js"></script>
 
 @endsection
 
-
+@section('bottomScript')
+    <script src="{{asset('js/user/userModal.js')}}"></script>
+    <script src="{{asset('js/user/userActions.js')}}"></script>
+@endsection

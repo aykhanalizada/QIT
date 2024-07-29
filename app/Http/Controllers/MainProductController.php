@@ -5,74 +5,46 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\MainProductService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
-class SettingController extends Controller
+class MainProductController extends Controller
 {
-    public function settingProduct()
+    public function __construct(
+        private MainProductService $mainProductService
+    ){}
+
+    public function product()
     {
-        $products = Product::all();
+        $products = Product::paginate(2);
         $categories = Category::all();
-        return view('settings.setting-product',compact('products','categories'));
-    }
-
-    public function updateProduct(Request $request)
-    {
-
-        $validator = $request->validate([
-            'name' => 'required'
-        ]);
-
-
-        $user = Product::find($request->id);
-        $user->update([
-            'name' => $request->name,
-            'category_id' => $request->category,
-        ]);
-
-        return response()->json([
-            'message'=>'Success'
-        ]);
+        return view('settings.setting-product', compact('products', 'categories'));
     }
 
     public function createProduct(Request $request)
     {
-        $validator = $request->validate([
-            'name' => 'required',
-        ]);
-
-
-        $product = Product::create([
-            'name' => $request->name,
-            'category_id' => $request->category,
-        ]);
-
+        $this->mainProductService->createProduct($request);
 
         return response()->json([
-            'message'=>'Success'
+            'message' => 'Success'
+        ]);
+    }
+    public function updateProduct(Request $request)
+    {
+
+        $this->mainProductService->updateProduct($request);
+
+        return response()->json([
+            'message' => 'Success'
         ]);
     }
 
 
     public function deleteProduct($id)
     {
-        try {
-
-            if(!$id)
-                return response()->json(['message'=>'Id Not Found'],Response::HTTP_NOT_FOUND);
-
-            $product = Product::find($id);
-            $product->delete();
-            return response()->json(['message'=>'Success'],Response::HTTP_OK);
-        }
-        catch (\Exception $e) {
-            return response()->json([
-                'message'=>'Server Error',
-                'error'=>$e->getMessage(),
-                ],Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        $this->mainProductService->deleteProduct($id);
     }
 
 

@@ -20,17 +20,15 @@ closePopup.forEach(function (closePopup) {
                 successModal.classList.add('hidden');
                 successModal.classList.remove('fadeOutUp');
                 location.reload();
-            }, 1000);
+            }, 700);
         }
         if (modalTarget == 'editUserPage') {
             $("#editUserContainer").removeClass('fadeInDown')
             $('#editUserContainer').addClass('fadeOutUp');
 
             setTimeout(function () {
-
                 $("#editUserPage").addClass('hidden')
-                $('#editUserContainer').remove('fadeOutUp');
-
+                $('#editUserContainer').removeClass('fadeOutUp');
             }, 700);
         }
 
@@ -89,7 +87,7 @@ function editUser($user) {
     $('input[name="id"]').val(userData.id)
     $('input[name="name"]').val(userData.name)
     $('input[name="surname"]').val(userData.surname)
-    $('input[name="username"]').val(userData.company.id)
+    $('input[name="username"]').val(userData.username)
     $('input[name="roles"]').val(userData.roles)
 
 
@@ -118,24 +116,6 @@ function deleteUser(id,routeUrl) {
 
     }).then((result) => {
         if (result.isConfirmed) {
-            /*  $.ajax({
-                  method: 'DELETE',
-                  url: '/items/' + itemId,
-                  success: function (response) {
-                      Swal.fire(
-                          'Deleted!',
-                          'Your item has been deleted.',
-                          'success'
-                      )
-                  },
-                  error: function (response) {
-                      Swal.fire(
-                          'Error!',
-                          'Failed to delete the item.',
-                          'error'
-                      )
-                  }
-              });*/
             $.ajax({
                 method: 'POST',
                 url: routeUrl,

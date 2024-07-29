@@ -9,6 +9,8 @@ class Country extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','short_name'];
+
     public function dgxProduct(){
         return $this->hasMany(DGX_Product::class);
     }

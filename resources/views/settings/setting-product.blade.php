@@ -8,7 +8,7 @@
             </th>
 
             <th scope="col" colspan="3" class="px-6 py-3 text-end">
-                <span id="createProdbtn" class="bg-green-600 p-1.5 rounded cursor-pointer" >Məhsul Əlavə Et
+                <span id="createProdbtn" class="bg-green-600 p-1.5 rounded cursor-pointer" onclick="createProduct()">Məhsul Əlavə Et
                     <i class="fa-solid fa-circle-plus text-base"></i></span>
             </th>
             </thead>
@@ -41,13 +41,13 @@
                     <td class="px-6 py-4 text-center">
                         <span id="showUser" onclick="showProduct({{json_encode($product)}})"
                               class="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline"><i
-                                class="fa-solid fa-eye text-xl pr-2"></i></span>
+                                    class="fa-solid fa-eye text-xl pr-2"></i></span>
                         <span onclick="editProduct({{json_encode($product)}})"
                               id="editUser"
                               class="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline"><i
-                                class="fas fa-edit text-xl pr-2"></i></span>
+                                    class="fas fa-edit text-xl pr-2"></i></span>
 
-                        <span onclick="deleteProduct({{$product->id}} )"
+                        <span onclick="deleteProduct( {{$product->id}} ,'{{route('deleteProduct',['id'=>$product->id] ) }}'  ) "
                               class="deleteUser cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             <i class="fas fa-trash text-xl"> </i>
                         </span>
@@ -60,18 +60,21 @@
 
 
     </div>
-    {{--    {{ $users->links() }}--}}
+        {{ $products->links() }}
 
-    <x-settings.create-product :categories="$categories" :products="$products"/>
-    <x-settings.show-product :categories="$categories" :products="$products"/>
-    <x-settings.edit-product :categories="$categories" :products="$products"/>
+    <x-main-products.create-product :categories="$categories" :products="$products"/>
+    <x-main-products.show-product :categories="$categories" :products="$products"/>
+    <x-main-products.edit-product :categories="$categories" :products="$products"/>
 
-    {{--    <x-settings.edit-product/>--}}
+
 
     <x-success/>
 
-    <script src="{{asset('setting.js')}}"></script>
-
 @endsection
 
+
+
+@section('bottomScript')
+    <script src="{{asset('js/setting-product.js')}}"></script>
+@endsection
 
