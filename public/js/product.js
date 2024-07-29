@@ -1,4 +1,3 @@
-/*
 
     let dgx = document.querySelector('#dgx')
     let dvxTopdan = document.querySelector('#dvxTopdan')
@@ -45,4 +44,3 @@
 }
 
 })
-*/

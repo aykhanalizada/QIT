@@ -23,12 +23,14 @@ closePopup.forEach(function (closePopup) {
             }, 1000);
         }
         if (modalTarget == 'editUserPage') {
-            editUserContainer.classList.remove('fadeInDown');
-            editUserContainer.classList.add('fadeOutUp');
+            $("#editUserContainer").removeClass('fadeInDown')
+            $('#editUserContainer').addClass('fadeOutUp');
 
             setTimeout(function () {
-                editUserPage.classList.add('hidden');
-                editUserContainer.classList.remove('fadeOutUp');
+
+                $("#editUserPage").addClass('hidden')
+                $('#editUserContainer').remove('fadeOutUp');
+
             }, 700);
         }
 
@@ -84,19 +86,17 @@ function editUser($user) {
     editUserContainer.classList.add('fadeInDown')
     let userData = $user
 
-    editUserPage.querySelector('input[name="id"]').value = userData.id
+    $('input[name="id"]').val(userData.id)
+    $('input[name="name"]').val(userData.name)
+    $('input[name="surname"]').val(userData.surname)
+    $('input[name="username"]').val(userData.company.id)
+    $('input[name="roles"]').val(userData.roles)
 
-    editUserPage.querySelector('input[name="name"]').value = userData.name
-    editUserPage.querySelector('input[name="surname"]').value = userData.surname
-    editUserPage.querySelector('input[name="username"]').value = userData.username
-    editUserPage.querySelector('select[name="company"]').value = userData.company.id
-    editUserPage.querySelector('select[name="rol"]').value = userData.roles
 
 }
 
 
-function deleteUser(id) {
-
+function deleteUser(id,routeUrl) {
     Swal.fire({
         title: 'Are you sure?',
         text: 'You won\'t be able to revert this!',
@@ -137,8 +137,8 @@ function deleteUser(id) {
                   }
               });*/
             $.ajax({
-                method: 'DELETE',
-                url: "http://qit.test/deleteUser/"+id,
+                method: 'POST',
+                url: routeUrl,
                 headers: {
                     'X-CSRF-TOKEN':$('input[name="csrf-token"]').val()
                 },
@@ -148,7 +148,8 @@ function deleteUser(id) {
                 },
                 success: function (response) {
                     console.log("Success", response)
-                    $('#userRow_' + id).remove();
+                    // $('#userRow_' + id).remove();
+                    $('#tableContainer').load(location.href + " #userTable")
                     setTimeout(() => {
                         // successModal.classList.remove('hidden')
                     }, 700)
@@ -185,26 +186,4 @@ function togglePasswordVisibility() {
 
 }
 
-function submitUpdateForm() {
 
-    let formData = $('#updateUserForm').serializeArray()
-
-    $.ajax({
-        method: 'POST',
-        url: "http://qit.test/updateUser",
-        data: formData,
-        success: function (response) {
-            console.log("Success", response)
-            editUserPage.classList.add('hidden')
-            setTimeout(() => {
-                successModal.classList.remove('hidden')
-            }, 700)
-        },
-        error: function (response) {
-            console.log("Error", response)
-
-        }
-
-    })
-
-}

@@ -1,18 +1,18 @@
-<div id="editProdPage" tabindex="-1" aria-hidden="true"
+<div id="createProdPage" tabindex="-1" aria-hidden="true"
      class="hidden animated-element overflow-y-auto overflow-x-hidden  absolute pb-8 bg-gray-800 bg-opacity-70 flex justify-center items-center w-full md:inset-0 h-screen md:h-full">
-    <div id="editProdContainer" class=" relative p-4 w-full max-w-2xl h-full md:h-auto">
+    <div id="createProdContainer" class=" relative p-4 w-full max-w-2xl h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
             <!-- Modal header -->
             <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                    Update Product
+                    Create Product
                 </h3>
 
 
                 <button type="button" id="closeEditModal"
                         class="closeModal text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-target="editProdPage">
+                        data-modal-target="createProdPage">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -25,10 +25,10 @@
 
 
             <!-- Modal body -->
-            <form id="updateProdForm">
+            <form id="createForm" action="{{route('createProduct')}}" method="POST">
 
                 @csrf
-                @method('PUT')
+
 
                 <input type="hidden" name="id">
 
@@ -57,10 +57,9 @@
 
 
                 <div class="flex items-center space-x-4 mt-5">
-                    <button type="button"
-                            onclick="submitUpdateProd()"
+                    <button type="submit"
                             class="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        Update
+                        Create
                     </button>
 
                 </div>

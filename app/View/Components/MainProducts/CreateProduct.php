@@ -1,16 +1,17 @@
 <?php
 
-namespace App\View\Components\Settings;
+namespace App\View\Components\MainProducts;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ShowProduct extends Component
+class CreateProduct extends Component
 {
     /**
      * Create a new component instance.
      */
+
     public $categories,$products;
     public function __construct($products,$categories)
     {
@@ -23,6 +24,6 @@ class ShowProduct extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.settings.show-product');
+        return view('components.settings.create-product');
     }
 }

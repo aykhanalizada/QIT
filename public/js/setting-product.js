@@ -24,6 +24,17 @@ closeModals.forEach(function (closeModal) {
                 location.reload();
             }, 1000);
         }
+        if (modalTarget == 'createProdPage') {
+            createProdContainer.classList.remove('fadeInDown');
+            createProdContainer.classList.add('fadeOutUp');
+
+            setTimeout(function () {
+                createProdPage.classList.add('hidden');
+                createProdContainer.classList.remove('fadeOutUp');
+
+            }, 700);
+        }
+
         if (modalTarget == 'editProdPage') {
             editProdContainer.classList.remove('fadeInDown');
             editProdContainer.classList.add('fadeOutUp');
@@ -31,36 +42,27 @@ closeModals.forEach(function (closeModal) {
             setTimeout(function () {
                 editProdPage.classList.add('hidden');
                 editProdContainer.classList.remove('fadeOutUp');
+
             }, 700);
         }
-
 
     })
 })
 
 
 
-console.log('salam')
-createProductbtnaaaaaaaaaaaaaaaaaa = document.querySelector('#createProdbtn')
-console.log(createProductbtnaaaaaaaaaaaaaaaaaa)
-function createProduct($product) {
+function createProduct() {
 
 
     createProdPage.classList.remove('hidden')
     createProdContainer.classList.add('fadeInDown')
-    let prodData = $product
 
-    createProdPage.querySelector('input[name="id"]').value = prodData.id
-
-    createProdPage.querySelector('input[name="name"]').value = prodData.name
-    createProdPage.querySelector('div[id="category"]').innerHTML = prodData.category.name
 
 }
 
 
 
 function showProduct($product) {
-    console.log('salam')
     showProdPage.classList.remove('hidden')
     showProdContainer.classList.add('fadeInDown')
     let prodData = $product
@@ -87,35 +89,67 @@ function editProduct($product) {
 
 }
 
-function submitUpdateProd() {
 
-    let formData = $('#updateProdForm').serializeArray()
-    console.log(formData)
-    $.ajax({
-        method: 'PUT',
-        headers: {
-            'X-CSRF-TOKEN': $('input[name="csrf-token"]').val()
-        },
-        url: "http://qit.test/updateProduct",
-        data: formData,
-        success: function (response) {
-            console.log("Success", response)
-            editProdPage.classList.add('hidden')
-            setTimeout(() => {
-                successModal.classList.remove('hidden')
-            }, 700)
-        },
-        error: function (response) {
-            console.log("Error", response)
 
-        }
 
-    })
+$(document).ready(function() {
+    $('#editForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+        // Serialize the form data
+        var formData = $(this).serialize();
 
-}
+        // Send an AJAX request
+        $.ajax({
+            url: $(this).attr('action'), // Form action URL
+            type: 'POST', // Form method
+            data: formData, // Form data
+            success: function(response) {
+                console.log("Success", response)
+                editProdPage.classList.add('hidden')
+                setTimeout(() => {
+                    successModal.classList.remove('hidden')
+                }, 700)
+                location.reload()
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+            }
+        });
+    });
 
-function deleteProduct(id) {
 
+    $('#createForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+        // Serialize the form data
+        var formData = $(this).serialize();
+
+        // Send an AJAX request
+        $.ajax({
+            url: $(this).attr('action'), // Form action URL
+            type: 'POST', // Form method
+            data: formData, // Form data
+            success: function(response) {
+                // Handle success response
+                console.log(response);
+                location.reload()
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+
+
+
+
+
+
+
+
+function deleteProduct(id,deleteUrl) {
     Swal.fire({
         title: 'Are you sure?',
         text: 'You won\'t be able to revert this!',
@@ -156,33 +190,29 @@ function deleteProduct(id) {
                   }
               });*/
             $.ajax({
-                method: 'DELETE',
-                url: "http://qit.test/deleteUser/" + id,
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name="csrf-token"]').val()
-                },
-                data: {
-                    id,
-
-                },
+                method: 'POST',
+                url: deleteUrl,
+                data: id,
                 success: function (response) {
                     console.log("Success", response)
-                    $('#userRow_' + id).remove();
-                    setTimeout(() => {
-                        // successModal.classList.remove('hidden')
-                    }, 700)
-                },
-                error: function (response) {
-                    console.log("Error", response)
+                    // $('#userRow_' + id).remove();
+                    console.log('salam');
 
+                    Swal.fire(
+                        'Deleted!',
+                        'Your item has been deleted.',
+                        'success'
+                    ).then(function (){
+                        location.reload();
+                    });
+
+                },
+                error: function (error) {
+                    console.log("Error", error)
+                    Swal.fire("Cannot Delete!",error.responseJSON.message,"error")
                 }
 
-            })
-            Swal.fire(
-                'Deleted!',
-                'Your item has been deleted.',
-                'success'
-            )
+            });
         }
     });
 }
